@@ -10,7 +10,7 @@ Explicit requirements:
 requirement #2 and keep it simple and avoid heavy frameworks.
 5. The datastore should run in-memory for the sake of this test.
 6. The final result should be executable as a standalone program (should not require a
-pre-installed container/server).
+pre-installed container/routesImpl).
 7. Demonstrate with tests that the API works as expected.
 Implicit requirements:
 1. The code produced by you is expected to be of high quality.
