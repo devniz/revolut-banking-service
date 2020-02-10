@@ -68,6 +68,18 @@ public class TransfertControllerImplMediumTest {
                 .assertThat().statusCode(401);
     }
 
+    @Test
+    @DisplayName("/POST transfer return 500 because of UnknownAccountException")
+    void itShouldTriggerUnknownAccountException() {
+        given().log().all()
+                .contentType(JSON)
+                .body(buildPayloadForUnknownAccountException())
+                .when()
+                .post("/transfer")
+                .then().log().all()
+                .assertThat().statusCode(500);
+    }
+
     private String buildPayload() {
         AccountRepositoryImpl accountRepository = new AccountRepositoryImpl();
         Long payerId = accountRepository.create(new AccountRequest(Utils.generateUid(), "John", new BigDecimal(100.00)));
@@ -96,6 +108,14 @@ public class TransfertControllerImplMediumTest {
         return "{\n" +
                 "\t\"from\":" + payerId + ",\n" +
                 "\t\"to\":" + payerId + ",\n" +
+                "\t\"amount\": 10 \n" +
+                "}";
+    }
+
+    private String buildPayloadForUnknownAccountException() {
+        return "{\n" +
+                "\t\"from\": 82479213470 ,\n" +
+                "\t\"to\": 3423411 ,\n" +
                 "\t\"amount\": 10 \n" +
                 "}";
     }

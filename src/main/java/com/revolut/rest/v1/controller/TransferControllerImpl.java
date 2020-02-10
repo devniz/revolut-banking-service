@@ -1,8 +1,11 @@
 package com.revolut.rest.v1.controller;
 
 import com.revolut.domain.TransferRequest;
+import com.revolut.infrastructure.exception.UnknownAccountException;
 import com.revolut.rest.v1.service.TransferServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class TransferControllerImpl implements TransferController {
 
     private TransferServiceImpl transferService;
@@ -12,14 +15,19 @@ public class TransferControllerImpl implements TransferController {
     }
 
     @Override
-    public String transfer(String payload) {
+    public synchronized String transfer(String payload) {
         TransferRequest req = TransferRequest.from(payload);
 
-        transferService.transfer(
-                req.getFrom(),
-                req.getTo(),
-                req.getAmount()
-        );
+        try {
+            transferService.transfer(
+                    req.getFrom(),
+                    req.getTo(),
+                    req.getAmount()
+            );
+        } catch (UnknownAccountException uae) {
+            log.error("Payer or receiver account does not exist");
+            throw new UnknownAccountException("Payer or receiver account does not exist");
+        }
         return "transaction is done";
     }
 }

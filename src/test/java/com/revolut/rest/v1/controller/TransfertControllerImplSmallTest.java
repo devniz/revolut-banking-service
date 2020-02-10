@@ -3,6 +3,7 @@ package com.revolut.rest.v1.controller;
 import com.revolut.infrastructure.AccountRepositoryImpl;
 import com.revolut.infrastructure.exception.InsufficientFundException;
 import com.revolut.infrastructure.exception.UnauthorisedTransaction;
+import com.revolut.infrastructure.exception.UnknownAccountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -63,10 +64,17 @@ public class TransfertControllerImplSmallTest {
 
     @Test
     @DisplayName("Verify throwing InsufficientFundsException")
-    public void itShouldThrowUnauthorisedTransactionIfTransferTargetSameAccount() {
+    public void itShouldThrowUnauthorisedTransactionExceptionIfTransferTargetSameAccount() {
         List<Long> accountIds = this.createMultipleAccount();
         TransferControllerImpl t = new TransferControllerImpl();
         assertThrows(UnauthorisedTransaction.class, () -> t.transfer(addUnauthorisedTransactionBody(accountIds.get(0), accountIds.get(1))));
+    }
+
+    @Test
+    @DisplayName("Verify throwing UnknowsAccountException")
+    public void itShouldThrowUnknownAccountExceptionIfPayerOrReceiverIdDoesNotexist() {
+        TransferControllerImpl t = new TransferControllerImpl();
+        assertThrows(UnknownAccountException.class, () -> t.transfer(addUnknownAccountBody()));
     }
 
     private List<Long> createMultipleAccount() {
@@ -100,6 +108,14 @@ public class TransfertControllerImplSmallTest {
         return "{\n" +
                 "\t\"from\":" + payerId + ",\n" +
                 "\t\"to\":" + payerId + ",\n" +
+                "\t\"amount\": 10\n" +
+                "}";
+    }
+
+    private String addUnknownAccountBody() {
+        return "{\n" +
+                "\t\"from\": 423423434 ,\n" +
+                "\t\"to\": 234234123424 ,\n" +
                 "\t\"amount\": 10\n" +
                 "}";
     }

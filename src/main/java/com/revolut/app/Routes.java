@@ -2,6 +2,7 @@ package com.revolut.app;
 
 import com.revolut.infrastructure.exception.InsufficientFundException;
 import com.revolut.infrastructure.exception.UnauthorisedTransaction;
+import com.revolut.infrastructure.exception.UnknownAccountException;
 import com.revolut.rest.v1.controller.AccountControllerImpl;
 import com.revolut.rest.v1.controller.TransferControllerImpl;
 
@@ -28,6 +29,10 @@ public class Routes {
         exception(UnauthorisedTransaction.class, (e, request, response) -> {
             response.status(401);
             response.body("Can't transfer to your own account.");
+        });
+        exception(UnknownAccountException.class, (e, request, response) -> {
+            response.status(500);
+            response.body("Payer or receiver account does not exist");
         });
     }
 }
