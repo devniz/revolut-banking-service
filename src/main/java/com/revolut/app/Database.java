@@ -14,6 +14,5 @@ public class Database {
 
     public void init() {
         jdbi.withHandle(handle -> handle.execute("CREATE TABLE IF NOT EXISTS account (id LONG PRIMARY KEY, name VARCHAR, balance FLOAT)"));
-        jdbi.withHandle(handle -> handle.execute("CREATE TABLE IF NOT EXISTS transaction (id LONG PRIMARY KEY, fromId LONG, toId LONG, timestamp DATE)"));
     }
 }

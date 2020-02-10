@@ -1,6 +1,8 @@
 package com.revolut.rest.v1.controller;
 
 import com.revolut.infrastructure.AccountRepositoryImpl;
+import com.revolut.infrastructure.exception.InsufficientFundException;
+import com.revolut.infrastructure.exception.UnauthorisedTransaction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,6 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionControllerImplSmallTest {
@@ -52,7 +55,24 @@ public class TransactionControllerImplSmallTest {
         AccountRepositoryImpl accountRepository = new AccountRepositoryImpl();
         assertEquals(new BigDecimal(80).setScale(2, RoundingMode.HALF_EVEN), accountRepository.getAccountById(Long.toString(ids.get("payerId"))).get().getBalance().setScale(2, RoundingMode.HALF_EVEN));
         assertEquals(new BigDecimal(120).setScale(2, RoundingMode.HALF_EVEN), accountRepository.getAccountById(Long.toString(ids.get("receiverId"))).get().getBalance().setScale(2, RoundingMode.HALF_EVEN));
+    }
 
+    @Test
+    @DisplayName("Verify throwing InsufficientFundsException")
+    public void itShouldThrowInsufficientFundsExceptionIfTransferAmountIsGreaterThanAccountBalance() throws InterruptedException {
+        List<Long> accountIds = this.createMultipleAccount();
+        Map<String, Long> ids = this.findPayerAndReceiverAccountId(accountIds);
+        TransferControllerImpl t = new TransferControllerImpl();
+        assertThrows(InsufficientFundException.class, () -> t.transfer(addInsufficientFundsBody(ids.get("payerId"), ids.get("receiverId"))));
+    }
+
+    @Test
+    @DisplayName("Verify throwing InsufficientFundsException")
+    public void itShouldThrowUnauthorisedTransactionIfTransferTargetSameAccount() throws InterruptedException {
+        List<Long> accountIds = this.createMultipleAccount();
+        Map<String, Long> ids = this.findPayerAndReceiverAccountId(accountIds);
+        TransferControllerImpl t = new TransferControllerImpl();
+        assertThrows(UnauthorisedTransaction.class, () -> t.transfer(addUnauthorisedTransaction(ids.get("payerId"), ids.get("receiverId"))));
     }
 
     private Map<String, Long> findPayerAndReceiverAccountId(List<Long> accountIds) {
@@ -68,6 +88,22 @@ public class TransactionControllerImplSmallTest {
         return "{\n" +
                 "\t\"from\":" + payerId + ",\n" +
                 "\t\"to\":" + receiverId + ",\n" +
+                "\t\"amount\": 10\n" +
+                "}";
+    }
+
+    private String addInsufficientFundsBody(Long payerId, Long receiverId) {
+        return "{\n" +
+                "\t\"from\":" + payerId + ",\n" +
+                "\t\"to\":" + receiverId + ",\n" +
+                "\t\"amount\": 10000\n" +
+                "}";
+    }
+
+    private String addUnauthorisedTransaction(Long payerId, Long receiverId) {
+        return "{\n" +
+                "\t\"from\":" + payerId + ",\n" +
+                "\t\"to\":" + payerId + ",\n" +
                 "\t\"amount\": 10\n" +
                 "}";
     }

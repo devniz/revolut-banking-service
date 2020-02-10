@@ -21,16 +21,12 @@ public class AccountRepositoryImpl {
     }
 
     public Long create(AccountRequest accountRequest) {
-        try {
-            this.database.getJdbi().useHandle(handle -> handle.execute(
-                    "INSERT INTO account(id, name, balance) VALUES (?, ?, ?)",
-                    accountRequest.getId(),
-                    accountRequest.getName(),
-                    accountRequest.getBalance()
-            ));
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
-        }
+        this.database.getJdbi().useHandle(handle -> handle.execute(
+                "INSERT INTO account(id, name, balance) VALUES (?, ?, ?)",
+                accountRequest.getId(),
+                accountRequest.getName(),
+                accountRequest.getBalance()
+        ));
         return accountRequest.getId();
     }
 
