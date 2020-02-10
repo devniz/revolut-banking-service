@@ -26,11 +26,11 @@ public class TransferServiceImpl implements TransferService {
         Account receiverAccount = accountRepository.getAccountById(Long.toString(to)).get();
 
         if (Long.toString(payerAccount.getId()).equals(Long.toString(receiverAccount.getId()))) {
-            throw new UnauthorisedTransaction("You cannot transfer to your own account.");
+            throw new UnauthorisedTransaction("Can't transfer to your own account.");
         }
 
         if (amount.compareTo(payerAccount.getBalance()) > 0) {
-            throw new InsufficientFundException("You don't have enough funds to perform this transfer.");
+            throw new InsufficientFundException("Not enough funds to do this transfer.");
         }
 
         BigDecimal updateBalanceForPayer = payerAccount.getBalance().subtract(amount);

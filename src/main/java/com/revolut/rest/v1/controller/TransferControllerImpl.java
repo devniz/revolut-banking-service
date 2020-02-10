@@ -12,7 +12,7 @@ public class TransferControllerImpl implements TransferController {
     }
 
     @Override
-    public synchronized String transfer(String payload) {
+    public String transfer(String payload) {
         TransferRequest req = TransferRequest.from(payload);
 
         transferService.transfer(

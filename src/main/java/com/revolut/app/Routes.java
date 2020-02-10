@@ -23,11 +23,11 @@ public class Routes {
         // Exception Handler.
         exception(InsufficientFundException.class, (e, request, response) -> {
             response.status(402);
-            response.body("Insufficient found");
+            response.body("Not enough funds to do this transfer");
         });
         exception(UnauthorisedTransaction.class, (e, request, response) -> {
             response.status(401);
-            response.body("Insufficient found");
+            response.body("Can't transfer to your own account.");
         });
     }
 }

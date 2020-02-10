@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "0856127f-baa8-42a7-b261-e7eab56de014",
+		"name": "banking-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:4567/account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"James\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4567/account?",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"account"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "maxwell",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Create a new bank account"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4567/account",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4567/account",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"account"
+					]
+				},
+				"description": "Get all created account"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4567/account/6242937877818261817",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4567/account/6242937877818261817",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"account",
+						"6242937877818261817"
+					]
+				},
+				"description": "Get account by ID"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4567/transfer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"from\": \"7755406941267641979\",\n\t\"to\": \"7755406941267641979\",\n\t\"amount\": 100.00\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4567/transfer",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"transfer"
+					]
+				},
+				"description": "Transfer money"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
