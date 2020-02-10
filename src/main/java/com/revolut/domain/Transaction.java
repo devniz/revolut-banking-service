@@ -12,10 +12,10 @@ import java.time.LocalDate;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class Transfer {
+public class Transaction {
     private long id;
     private LocalDate timestamp;
-    private Account from;
-    private Account to;
+    private long fromId;
+    private long toId;
     private BigDecimal amount;
 }

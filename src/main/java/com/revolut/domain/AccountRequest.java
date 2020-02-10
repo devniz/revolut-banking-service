@@ -1,5 +1,7 @@
 package com.revolut.domain;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,4 +19,9 @@ public class AccountRequest {
     private long id;
     private String name;
     private BigDecimal balance;
+
+    public static AccountRequest from(String json) {
+        Gson gson = new GsonBuilder().create();
+        return gson.fromJson(json, AccountRequest.class);
+    }
 }

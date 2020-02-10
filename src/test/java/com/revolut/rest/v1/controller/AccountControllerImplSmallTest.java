@@ -62,13 +62,13 @@ public class AccountControllerImplSmallTest {
     @Test
     @DisplayName("Verify get account by ID")
     void itShouldGetAccountGivenValidId() {
-        when(accountService.getAccountById("123")).thenReturn(Optional.of(new Account(123, "joe", new BigDecimal(100.00))));
+        when(accountService.getAccountById("123")).thenReturn(Optional.of(new Account(123L, "joe", new BigDecimal(100.00))));
 
         var resp = accountController.getAccountById("123");
 
         verify(accountService).getAccountById("123");
         assertNotNull(resp);
-        assertEquals(123, resp.get().getId());
+        assertEquals(123L, resp.get().getId());
         assertEquals("joe", resp.get().getName());
         assertEquals(new BigDecimal(100.00), resp.get().getBalance());
     }

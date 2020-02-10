@@ -8,21 +8,21 @@ import java.util.Optional;
 
 public class AccountControllerImpl implements AccountController {
 
-    private AccountServiceImpl accountServiceImpl;
+    private AccountServiceImpl accountService;
 
     public AccountControllerImpl() {
-        this.accountServiceImpl = new AccountServiceImpl();
+        this.accountService = new AccountServiceImpl();
     }
 
     public Long create(String name) {
-        return accountServiceImpl.create(name);
+        return accountService.create(name);
     }
 
     public List<Account> getAllAccount() {
-        return accountServiceImpl.getAllAccount();
+        return accountService.getAllAccount();
     }
 
     public Optional<Account> getAccountById(String id) {
-        return accountServiceImpl.getAccountById(id);
+        return accountService.getAccountById(id);
     }
 }
