@@ -17,7 +17,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class TransactionControllerImplMediumTest {
+public class TransfertControllerImplMediumTest {
 
     @BeforeAll
     static void setUp() {
