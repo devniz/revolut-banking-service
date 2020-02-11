@@ -22,7 +22,7 @@ public class TransferServiceImpl implements TransferService {
     }
 
     @Override
-    public void transfer(long from, long to, BigDecimal amount) throws UnknownAccountException {
+    public String transfer(long from, long to, BigDecimal amount) throws UnknownAccountException {
         if (accountRepository.getAccountById(Long.toString(from)).isPresent() && accountRepository.getAccountById(Long.toString(to)).isPresent()) {
             Account payerAccount = accountRepository.getAccountById(Long.toString(from)).get();
             Account receiverAccount = accountRepository.getAccountById(Long.toString(to)).get();
@@ -46,5 +46,6 @@ public class TransferServiceImpl implements TransferService {
         } else {
             throw new UnknownAccountException("Payer or receiver account does not exist");
         }
+        return "Transaction success";
     }
 }

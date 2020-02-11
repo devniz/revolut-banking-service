@@ -5,5 +5,5 @@ import com.revolut.infrastructure.exception.UnknownAccountException;
 import java.math.BigDecimal;
 
 public interface TransferService {
-    void transfer(long from, long to, BigDecimal amount) throws UnknownAccountException;
+    String transfer(long from, long to, BigDecimal amount) throws UnknownAccountException;
 }
