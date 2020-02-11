@@ -63,7 +63,7 @@ public class TransfertControllerImplSmallTest {
     }
 
     @Test
-    @DisplayName("Verify throwing InsufficientFundsException")
+    @DisplayName("Verify throwing UnauthorisedTransactionException")
     public void itShouldThrowUnauthorisedTransactionExceptionIfTransferTargetSameAccount() {
         List<Long> accountIds = this.createMultipleAccount();
         TransferControllerImpl t = new TransferControllerImpl();
