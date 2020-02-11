@@ -33,6 +33,8 @@ From there, I was looking back at optimistic/pessimistic locking, Java synchroni
   
 ## Implementation phase
 
+The code block dedicated to the Transfer operation is synchronized and the database layer support Transaction with lock step. See Serializable transactions: https://jdbi.org/#_serializable_transactions 
+
 ### Dependencies:
 - Spark Framework: Lightweight micro framework for web services.
 - JDBI 3: Better implementation of JDBC. It provides full support for JDBC transaction.
