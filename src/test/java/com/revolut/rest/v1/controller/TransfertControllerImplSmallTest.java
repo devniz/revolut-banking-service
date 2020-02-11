@@ -28,7 +28,7 @@ public class TransfertControllerImplSmallTest {
 
     @Test
     @DisplayName("Verify concurrent transfers with no race condition")
-    void itShouldMakeMultipleConcurrentTransfersWithoutAnyRaceConcurrencyIssue() throws InterruptedException, ExecutionException {
+    void itShouldMakeMultipleConcurrentTransfersSuccessfully() throws InterruptedException, ExecutionException {
         List<Long> accountIds = this.createMultipleAccount();
         TransferControllerImpl t = new TransferControllerImpl();
 

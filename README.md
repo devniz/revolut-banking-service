@@ -50,7 +50,7 @@ From there, I was looking back at optimistic/pessimistic locking, Java synchroni
 
 The REST API is accepting those calls:
 
-- /POST account: Create a new Account given a name is the body.
+- /POST account: Create a new Account given a name in the body.
 - /GET account: Return all created account stored.
 - /GET account/{id}: Return account by ID.
 - /POST transfer: Create a new transaction between 2 accounts.
